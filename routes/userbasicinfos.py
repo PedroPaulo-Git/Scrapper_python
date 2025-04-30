@@ -1,21 +1,16 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 import requests
 from utils import get_headers
 
-# Definindo o Blueprint para a rota
 user_basic_infos_route = Blueprint('user_basic_infos', __name__)
 
-# URL para fazer a requisição
-url_fetch_username = "https://www.instagram.com/web/search/topsearch/?context=blended&query=pedro&rank_token=0.3953592318270893&count=10"
-
-# Função para obter os dados
-def fetch_users():
+def fetch_users(username):
     headers = get_headers()
-    response = requests.get(url_fetch_username, headers=headers)
+    url = f"https://www.instagram.com/web/search/topsearch/?context=blended&query={username}&rank_token=0.3953592318270893&count=10"
+    response = requests.get(url, headers=headers)
     data = response.json()
-    users = data['users']
+    users = data.get('users', [])
     
-    # Lista com todos os usuários (sem filtro)
     all_users = [
         {
             "username": user["user"]["username"],
@@ -29,10 +24,14 @@ def fetch_users():
     
     return all_users
 
-# Rota para obter as informações básicas dos usuários
 @user_basic_infos_route.route('/userbasicinfos', methods=['GET'])
 def get_user_basic_infos():
-    all_users = fetch_users()
+    username = request.args.get('username')
+    
+    if not username:
+        return jsonify({"error": "Parâmetro 'username' é obrigatório"}), 400
+    
+    all_users = fetch_users(username)
     basic_infos = [
         {
             "username": user["username"],
