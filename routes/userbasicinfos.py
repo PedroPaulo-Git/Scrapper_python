@@ -19,7 +19,9 @@ def fetch_users(username):
     try:
         # Carregar o perfil do usuário
         profile = instaloader.Profile.from_username(L.context, username)
-        
+        # print(profile.get_posts)
+        # print(profile.get_reels)
+        # print(profile.get_saved_posts)
         # Obter informações básicas do perfil
         user_info = {
             "username": profile.username,
