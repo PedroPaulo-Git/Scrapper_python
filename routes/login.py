@@ -3,7 +3,7 @@ import time
 from instaloader import Instaloader
 from instaloader.exceptions import TwoFactorAuthRequiredException
 from routes.getcode2fa import get_2fa_code
-def login_instaloader(username, password, max_retries=3):
+def login_instaloader(username, password, max_retries=3,min_time_between_reqs=60):
     try:
         L = Instaloader()
         session_filename = f"session-{username}"
@@ -46,6 +46,9 @@ def login_instaloader(username, password, max_retries=3):
         print("Salvando a sessão...")
         L.save_session_to_file(session_filename)
         print("Sessão salva com sucesso!")
+        print(f"Aguardando {min_time_between_reqs} segundos antes de continuar com as requisições...")
+        time.sleep(min_time_between_reqs)  # Pause de 60 segundos (1 minuto)
+
         return L
 
     except Exception as e:
