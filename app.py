@@ -2,6 +2,8 @@ from flask import Flask
 from routes.userbasicinfos import user_basic_infos_route
 from routes.followers import followers_route
 from routes.highlight import highlights_route
+from routes.user_cache import user_info_cache  # <- ADICIONA ISSO
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -12,6 +14,7 @@ CORS(app)  # permite todas as origens (inclusive localhost:3000)
 app.register_blueprint(highlights_route)
 app.register_blueprint(user_basic_infos_route)
 app.register_blueprint(followers_route)
+app.register_blueprint(user_info_cache) 
 
 if __name__ == "__main__":
     app.run(debug=True)

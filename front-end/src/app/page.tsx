@@ -267,7 +267,7 @@ export default function Home() {
     const fotosFake = [
       "/picturenone.png",
       "/picturenone.png",
-      "https://randomuser.me/api/portraits/women/44.jpg",
+      "/picturenone.png",
     ];
 
     const nome = nomesFake[Math.floor(Math.random() * nomesFake.length)];
@@ -327,7 +327,7 @@ export default function Home() {
       setFirstUser({
         id: profileData.id || null,
         username: profileData.username || formattedSearch,
-        full_name: profileData.full_name || "Nome não disponível",
+        full_name: profileData.full_name || "",
         profile_pic_url: profileData.picture || "", // fallback seguro
       });
 
@@ -417,7 +417,7 @@ export default function Home() {
                 <div className="relative mb-5">
                   <input
                     type="search"
-                    placeholder="Ex.: neymarjr"
+                    placeholder="Ex: kimkardashian"
                     className="rounded-xl w-full p-3 pr-16 outline-none text-white bg-[#232048] border border-cyan-400"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -436,10 +436,10 @@ export default function Home() {
                 </div>
               </div>
               <span className="text-center text-sm text-gray-500 relative ">
-                <GiPadlock className=" text-cyan-400 text-2xl mt-4 absolute " />
+                <GiPadlock className=" text-cyan-400 text-2xl mt-0 absolute " />
                 <span className="flex flex-col">
                   <p className="mt-1 text-base text-center text-gray-300">
-                   100% safe and anonymous.
+                    100% safe and anonymous.
                   </p>
                   <p className="text-center text-gray-300">
                     They will never know you tried to track their activity.

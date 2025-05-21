@@ -1,26 +1,28 @@
 import requests
 import json
 # Defina os cookies corretamente
-cookies = (
-    "ps_n=1; "
-    "datr=wGURaERLiN3kuj8Vp7zGYlj3; "
-    "ds_user_id=2448742298; "
-    "csrftoken=E1JM3J3GU37s9MXW9D0VzRftE9VVBA4y; "
-    "ig_did=89ACB30B-7EE1-4240-8322-833E48471829; "
-    "ps_l=1; "
-    "wd=986x872; "
-    "mid=aBFlwAABAAEVMKbVZSkqZlzSY3jZ; "
-    "sessionid=2448742298%3Ajsf7diDeyWepOl%3A16%3AAYfA9yxd3_GRunoA2rUrILZta1WrqjwShujSsYMedA; "
-    "dpr=2; "
-    "rur=NHA\\0542448742298\\0541777507348:01f778aa5b5f2f956c31a08715673a248d0f46dfb453327e0c8d2ee8b2d165db577f3cc9"
-)
+cookies = {
+    "ps_n": "1",
+    "datr": "jKgRaOOHaO1AbjJoJmjqS-b6",
+    "ig_nrcb": "1",
+    "ds_user_id": "2448742298",
+    "csrftoken": "0twLk8Y2ma30MjUph43jCNjONNlzx0TW",
+    "ig_did": "E66F2999-9072-407B-8C21-973E8620D5C1",
+    "ps_l": "1",
+    "wd": "1920x959",
+    "mid": "aC5DWgALAAG19ClEEzXuSwjc3X79",
+    "sessionid": "2448742298%3Aq96TCvOIQvsBqS%3A21%3AAYeD8P0ChAqO_j_PKagZjJzDnsKiRoiUuPUZv_A7ig",
+    "rur": "NHA,2448742298,1779398657:01f78492556a102df1b841ba33e5054f4d76cad58a0aaa49585305dfc62a13c92162ad83"
+}
 
-# Cabeçalhos
+# Cabeçalhos típicos de um navegador
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "*/*",
+    "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.instagram.com/",
-    "X-Requested-With": "XMLHttpRequest",
-    "Cookie": cookies
+    "X-CSRFToken": cookies["csrftoken"],
+    "X-Requested-With": "XMLHttpRequest"
 }
 
 # URL para fazer a requisição

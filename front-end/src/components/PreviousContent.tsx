@@ -101,7 +101,7 @@ const PreviousContent: React.FC<PreviousContentProps> = ({
       const remainingTime =
         audioRef.current.duration - audioRef.current.currentTime;
 
-      if (remainingTime <= 1) {
+      if (remainingTime <= 4) {
         audioRef.current.pause(); // Para o áudio 2 segundos antes
         setEndAudio(true); // Mostra a div
       }
@@ -491,7 +491,7 @@ const PreviousContent: React.FC<PreviousContentProps> = ({
                 </div>
               </div>
             </>
-          ) : followersError2 === false ? (
+          ) : highlightData.thumbnail ? (
             <>
               <h1 className="text-2xl mt-[50px] text-center">
                 We’ve detected{" "}
@@ -539,7 +539,47 @@ const PreviousContent: React.FC<PreviousContentProps> = ({
               </div>
             </>
           ) : (
-            <div></div>
+            <div>
+              <>
+              <h1 className="text-2xl mt-[50px] text-center">
+                We’ve detected{" "}
+                <b className="text-[#5468FF]">personal conversations</b> from
+                this account
+              </h1>
+              <p className="text-gray-400 text-center mt-5 mb-5">
+                Our A.I. has identified messages that seem to be more personal
+                or emotional in nature.
+              </p>
+              <div className="print bg-[#000] rounded-2xl relative h-[240px] mt-[20px] w-full overflow-hidden">
+                <img
+                  src="/header-dm.png"
+                  className="mb-2 w-full object-contain z-10 rounded-2xl"
+                  alt=""
+                  draggable="false"
+                />
+                <div className="itens space-x-3 flex items-end absolute z-[4] left-[4%] top-[35%]">
+                  <img
+                    src="/profile-m.png"
+                    className="mb-2"
+                    alt=""
+                    width="30"
+                    draggable="false"
+                  />
+                  <div className="messages select-none pointer-events-none space-y-[3px] pr-[20px] ">
+                    <div className="bg-[#262626] text-[14px] w-fit rounded-tr-3xl rounded-bl-[4px] rounded-br-3xl rounded-tl-3xl px-[14px] py-[8px] text-[#eee]">
+                      <span>hey</span>
+                    </div>
+                    <div className="bg-[#262626] text-[14px] w-fit rounded-tr-3xl rounded-tl-[4px] rounded-bl-[4px] rounded-br-3xl  px-[14px] py-[8px] text-[#eee]">
+                      <span>Will you be in {localization} these days?</span>
+                    </div>
+                    <div className="bg-[#262626] text-[14px] w-fit rounded-tr-3xl rounded-tl-[4px] rounded-bl-[4px] rounded-br-3xl  px-[14px] py-[8px] text-[#eee]">
+                      <span>I wanna see you 😏</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+            </div>
           )}
 
           <h1 className="text-2xl mt-[100px] text-center">
@@ -581,7 +621,7 @@ const PreviousContent: React.FC<PreviousContentProps> = ({
                 </div>
                 <div className="w-full flex justify-end">
                   <div className="bg-[#3B67EA] text-[14px] w-fit overflow-clip rounded-tl-3xl rounded-br-3xl rounded-bl-3xl rounded-tr-[4px] px-[14px] py-[8px] text-[#eee]">
-                    LOL he was in {localization} when that happened 😂
+                    LOL, he was around {localization} 😂
                   </div>
                 </div>
               </div>
@@ -599,7 +639,7 @@ const PreviousContent: React.FC<PreviousContentProps> = ({
             <div>
               <img
                 alt=""
-                src="/PUP.svg"
+                src="/audioblocked.png"
                 className="mt-5 false"
                 draggable="false"
               />
@@ -738,7 +778,7 @@ const PreviousContent: React.FC<PreviousContentProps> = ({
               <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
               <circle cx="12" cy="12" r="3"></circle>
             </svg>{" "}
-           🔐 View Full Report Now
+            Unlock Full Access Now 
           </button>
         </div>
       ) : (

@@ -23,10 +23,9 @@ export default function VerticalProgressBar({ progress, setProgress }) {
     <div className="flex flex-col space-y-2 text-center justify-center">
       <div className="flex space-x-7 ">
         <LoadingSpinner className="" />
-        <h1 className="font-semibold text-lg text-left  text-[#5468FF] mt-1">
-          {" "}
-          Descriptografando informações...
-        </h1>
+      <h1 className="font-semibold text-lg text-left text-[#5468FF] mt-1">
+  Decrypting information...
+</h1>
       </div>
       <div className="w-full flex">
         <div className="relative w-0.5 h-60 bg-gray-700 rounded-full  ml-8 ">
@@ -61,19 +60,19 @@ export default function VerticalProgressBar({ progress, setProgress }) {
             style={{ top: "95%" }}
           />{" "}
         </div>
-        <div className="text-left ml-12 mt-4">
-          <h1 className="font-semibold text-white">Passo 1</h1>
-          <p className="text-gray-300 mb-4">Carregando últimos logins...</p>
+      <div className="text-left ml-12 mt-4">
+  <h1 className="font-semibold text-white">Step 1</h1>
+  <p className="text-gray-300 mb-4">Loading recent logins...</p>
 
-          <h1 className="font-semibold text-white">Passo 2</h1>
-          <p className="text-gray-300 mb-4">Carregando directs...</p>
+  <h1 className="font-semibold text-white">Step 2</h1>
+  <p className="text-gray-300 mb-4">Loading direct messages...</p>
 
-          <h1 className="font-semibold text-white">Passo 3</h1>
-          <p className="text-gray-300 mb-4">Carregando últimas interações...</p>
+  <h1 className="font-semibold text-white">Step 3</h1>
+  <p className="text-gray-300 mb-4">Loading recent interactions...</p>
 
-          <h1 className="font-semibold text-white">Passo 4</h1>
-          <p className="text-gray-300">Carregando storys ocultos...</p>
-        </div>
+  <h1 className="font-semibold text-white">Step 4</h1>
+  <p className="text-gray-300">Loading hidden stories...</p>
+</div>
       </div>
     </div>
   );
