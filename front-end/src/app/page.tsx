@@ -508,7 +508,7 @@ export default function Home() {
 
                       <h2 className="px-0 flex text-base text-gray-300">
                         Our system is searching for vulnerabilities to bypass
-                        the account's privacy restrictions.
+                        This account&apos;s privacy settings are restricted.
                       </h2>
                     </div>
                   )}
