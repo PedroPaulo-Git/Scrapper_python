@@ -131,11 +131,17 @@ def login_instaloader(username, password, max_retries=3, min_time_between_reqs=6
     except Exception as e:
         print(f"Erro durante o login: {str(e)}")
         raise
-
+L = None
 def fetch_users(username):
-    insta_user = 'pascoacacau'
-    insta_pass = '9BNtRiDwOz'
-    L = login_instaloader(insta_user, insta_pass)
+    global L
+
+    if L is None:
+        try:
+            insta_user = 'pascoacacau'
+            insta_pass = '9BNtRiDwOz'
+            L = login_instaloader(insta_user, insta_pass)
+        except Exception as e:
+            return {"error": f"Login falhou: {str(e)}"}
 
     try:
         profile = Profile.from_username(L.context, username)
@@ -148,7 +154,11 @@ def fetch_users(username):
         }
         return user_info
     except Exception as e:
-        return {"error": str(e)}
+            error_msg = str(e)
+            if "401" in error_msg or "500" in error_msg or "Please wait a few minutes" in error_msg:
+                print(f"⚠️ Interrompido: erro crítico detectado - {error_msg}")
+                return {"error": "Serviço temporariamente indisponível. Tente novamente mais tarde."}
+            return {"error": error_msg}
 
 def convert_image_to_base64(image_url):
     try:
