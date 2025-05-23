@@ -3,10 +3,16 @@ import time
 import base64
 import requests
 import json
+import random
 from flask import Blueprint, jsonify, request
+from dotenv import load_dotenv
 from instaloader import Instaloader, Profile
 from instaloader.exceptions import TwoFactorAuthRequiredException
 from routes.getcode2fa import get_2fa_code
+# from flask_limiter import Limiter
+# from flask_limiter.util import get_remote_address
+# limiter = Limiter(key_func=get_remote_address)
+load_dotenv()
 
 # CACHE JSON FILE
 cache_file = "cached_profiles.json"
@@ -48,7 +54,7 @@ followers_route = Blueprint('followers_route', __name__)
 user_info_cache = Blueprint('user_info_cache', __name__)
 
 # Sessões em memória
-
+L = None
 _sessions = {}
 CACHE_FOLDER = "cache"
 os.makedirs(CACHE_FOLDER, exist_ok=True)
@@ -131,14 +137,14 @@ def login_instaloader(username, password, max_retries=3, min_time_between_reqs=6
     except Exception as e:
         print(f"Erro durante o login: {str(e)}")
         raise
-L = None
+
 def fetch_users(username):
     global L
 
     if L is None:
         try:
-            insta_user = 'pascoacacau'
-            insta_pass = '9BNtRiDwOz'
+            insta_user = os.getenv("INSTA_USER")
+            insta_pass = os.getenv("INSTA_PASS")
             L = login_instaloader(insta_user, insta_pass)
         except Exception as e:
             return {"error": f"Login falhou: {str(e)}"}
@@ -159,18 +165,41 @@ def fetch_users(username):
                 print(f"⚠️ Interrompido: erro crítico detectado - {error_msg}")
                 return {"error": "Serviço temporariamente indisponível. Tente novamente mais tarde."}
             return {"error": error_msg}
+        
+def get_instaloader_session():
+    global L
+    if L:
+        return L
+    insta_user = os.getenv("INSTA_USER")
+    insta_pass = os.getenv("INSTA_PASS")
+    L = login_instaloader(insta_user, insta_pass)
+    return L
+
+import mimetypes
+
+image_cache = {}
 
 def convert_image_to_base64(image_url):
+    if image_url in image_cache:
+        return image_cache[image_url]
     try:
-        response = requests.get(image_url)
+        response = requests.get(image_url, timeout=10)
         if response.status_code != 200:
             return {"error": "Erro ao baixar a imagem"}
+
+        content_type = response.headers.get("Content-Type")
+        if not content_type:
+            content_type = mimetypes.guess_type(image_url)[0] or "image/jpeg"
+
         image_bytes = response.content
         base64_image = base64.b64encode(image_bytes).decode('utf-8')
-        content_type = "image/jpeg"
-        return f"data:{content_type};base64,{base64_image}"
+        data_url = f"data:{content_type};base64,{base64_image}"
+        
+        image_cache[image_url] = data_url
+        return data_url
     except Exception as e:
         return {"error": f"Erro ao converter a imagem para base64: {str(e)}"}
+
 
 
 @user_info_cache.route('/cacheduserinfos', methods=['GET'])
@@ -213,6 +242,7 @@ def cached_user_info():
 
 
 @user_basic_infos_route.route('/userbasicinfos', methods=['GET'])
+# @limiter.limit("5 per minute") 
 def get_user_basic_infos():
     username = request.args.get('username')
     if not username:
@@ -226,7 +256,7 @@ def get_user_basic_infos():
     user_info = fetch_users(username)
     if "error" in user_info:
         return jsonify({"error": user_info["error"]}), 500
-
+    time.sleep(random.uniform(2, 5))
     profile_pic_url = user_info.get("picture")
     if not profile_pic_url:
         return jsonify({"error": "Imagem de perfil não encontrada"}), 404
@@ -255,12 +285,12 @@ def get_user_highlights():
         return jsonify({'status': 'success', 'thumbnail_base64': cached})
 
     try:
-        insta_username = 'pascoacacau'
-        insta_password = '9BNtRiDwOz'
-        L = login_instaloader(insta_username, insta_password)
+        insta_user = os.getenv("INSTA_USER")
+        insta_pass = os.getenv("INSTA_PASS")
+        L = login_instaloader(insta_user, insta_pass)
         if not L:
             return jsonify({'error': 'Falha no login do Instaloader'}), 401
-
+        time.sleep(random.uniform(2, 5))
         profile = Profile.from_username(L.context, username)
         user_highlights = L.get_highlights(profile)
 
@@ -296,13 +326,14 @@ def get_user_followers():
 
     try:
         # Informações de login
-        insta_username = 'pascoacacau'  # Substitua pelo seu username
-        insta_password = '9BNtRiDwOz'  # Substitua pela sua senha
+        insta_user = os.getenv("INSTA_USER")
+        insta_pass = os.getenv("INSTA_PASS") # Substitua pela sua senha
 
         # Realizando o login
-        L = login_instaloader(insta_username, insta_password)
+        L = login_instaloader(insta_user, insta_pass)
 
         # Pegando o perfil do usuário
+        time.sleep(random.uniform(2, 5))        
         profile = Profile.from_username(L.context, username)
         
         followers = []
