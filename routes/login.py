@@ -21,31 +21,39 @@ if not os.path.exists(cache_file):
         json.dump({}, f)
 
 # COOKIES PEGOS DA SESSÃO LOGADA
+# COOKIES PEGOS DA SESSÃO LOGADA (ATUALIZADOS)
 cookies = {
     "ps_n": "1",
     "datr": "Gk8uaNzPs1xAinX1z_se8Ugj",
     "ig_nrcb": "1",
     "ds_user_id": "2448742298",
-    "csrftoken": "Qnk9X2CjRkqUG8gjTLVCY94PgHcM9vYF",
+    "csrftoken": "nqxEXshulMc4Iq7G9p6f2wAH02aPlz1U",
     "ig_did": "60759FC5-06AD-4A97-90B4-D1AE1D61D99D",
     "ps_l": "1",
     "wd": "1920x959",
     "mid": "aC5PGgABAAEt6893m-GnP6UOw2sG",
-    "sessionid": "2448742298%3AoFCk8gO25GUD2J%3A14%3AAYfDHk0wFv-FeTg_n-euGulx98TR2RIscqFu3KpCxg",
+    "sessionid": "2448742298%3AiKJSqNuo6kkZwz%3A26%3AAYe_PhM_Xy0KsGuBwYc3g9kK4n6XZwVqrndEMgqp5A",
     "dpr": "1",
-    "rur": "NHA,2448742298,1779404992:01f7736e6f36f872dfedadc76bd2868398837d0cd4c61651bac3b9402c87dd55b8bc09f8"
+    "rur": "\"NHA\\0542448742298\\0541779658847:01f79771bf5352148b44be354db5b05cbc5454f782bc89c4b6206bb8ec253cf213fb38de\""
 }
 
 
+
 # HEADERS PRA CAMUFLAR COMO SE FOSSE NAVEGADOR
+# HEADERS PRA CAMUFLAR COMO SE FOSSE NAVEGADOR (ATUALIZADOS)
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
     "Accept": "*/*",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.instagram.com/",
     "X-CSRFToken": cookies["csrftoken"],
-    "X-Requested-With": "XMLHttpRequest"
+    "X-Requested-With": "XMLHttpRequest",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Dest": "empty",
+    "Connection": "keep-alive"
 }
+
 
 # Blueprint para rota básica de infos
 user_basic_infos_route = Blueprint('user_basic_infos', __name__)
