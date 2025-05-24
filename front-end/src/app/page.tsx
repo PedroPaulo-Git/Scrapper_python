@@ -93,7 +93,7 @@ export default function Home() {
       const fetchFollowers = async () => {
         try {
           const response = await fetch(
-            `http://127.0.0.1:5000/userfollowers?username=${username}`
+            `https://scrapper-python-mrj0.onrender.com/userfollowers?username=${username}`
           );
           console.log(response);
           if (response.status === 429) {
@@ -138,7 +138,7 @@ export default function Home() {
       const fetchHighlights = async () => {
         try {
           const response = await fetch(
-            `http://127.0.0.1:5000/userhighlights?username=${username}`
+            `https://scrapper-python-mrj0.onrender.com/userhighlights?username=${username}`
           );
 
           if (response.status === 502)
@@ -309,7 +309,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:5000/userbasicinfos?username=${formattedSearch}`
+        `https://scrapper-python-mrj0.onrender.com/userbasicinfos?username=${formattedSearch}`
       );
 
       if (!response.ok) {
