@@ -18,16 +18,16 @@ app.register_blueprint(user_info_cache)
 
 @app.route('/validate-purchase')
 def validate_purchase():
-    email = request.args.get("email")
+    token = request.args.get("token")
 
-    if not email:
+    if not token:
         return jsonify({"valid": False})
 
     try:
         with open("purchases.txt", "r") as file:
             compras = file.readlines()
             for linha in compras:
-                if email in linha:
+                if token.strip() in linha.strip():
                     return jsonify({"valid": True})
     except FileNotFoundError:
         pass
@@ -37,25 +37,23 @@ def validate_purchase():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     try:
-        # Primeiro tenta pegar como JSON
         if request.is_json:
             data = request.get_json()
         else:
-            # Fallback pra form-data
             data = request.form.to_dict()
 
         print("Compra recebida:", data)
 
-        email = data.get("email")
-        if email:
+        token = data.get("custom_field_token")  # substitua com o nome real do campo no Gumroad
+
+        if token:
             with open("purchases.txt", "a") as file:
-                file.write(f"{email}\n")  # Salva uma linha por compra
+                file.write(f"{token}\n")
 
         return '', 200
     except Exception as e:
         print("Erro no webhook:", str(e))
         return jsonify({"error": "Webhook error"}), 400
-
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import Image from "next/image";
 import { RiErrorWarningLine } from "react-icons/ri";
+import { v4 as uuidv4 } from "uuid";
 
 const Congratulations = ({ isErro429 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,7 +52,16 @@ const Congratulations = ({ isErro429 }) => {
         return { hours, minutes, seconds };
       });
     };
+    const handleClick = () => {
+      const token = uuidv4(); // gera token único
+      localStorage.setItem("purchase_token", token); // salva no navegador
 
+      // monta a URL do checkout com o token anexado
+      const url = `${checkoutData.checkoutUrl}?token=${token}`;
+
+      // redireciona
+      window.location.href = url;
+    };
     // Atualiza a data no formato dd/mm/yyyy
     const today = new Date();
     const day = today.getDate().toString().padStart(2, "0");
@@ -204,7 +214,7 @@ const Congratulations = ({ isErro429 }) => {
         <div className="w-full bottom-2 mt-5 flex justify-center items-center">
           <a
             className="z-20 uppercase bg-[#5468FF] h-10 px-4 py-10 text-xl font-bold flex bg-primary rounded-2xl w-full justify-center items-center"
-            href={checkoutData.checkoutUrl}
+            onClick={handleClick}
           >
             <p>ACCESS NOW</p>
           </a>
@@ -438,7 +448,7 @@ const Congratulations = ({ isErro429 }) => {
         <div className="w-full bottom-2 mt-5 flex justify-center items-center ">
           <a
             className=" z-20 uppercase bg-[#5468FF] h-10 px-4 py-10 text-xl font-bold flex bg-primary rounded-2xl w-full justify-center items-center"
-            href={checkoutData.checkoutUrl}
+            onClick={handleClick}
           >
             <p>ACCESS NOW</p>
           </a>
