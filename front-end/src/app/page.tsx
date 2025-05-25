@@ -74,22 +74,19 @@ export default function Home() {
 }, []);
 
  useEffect(() => {
-    const email = localStorage.getItem('user_email') // ou outro identificador salvo
+  const token = localStorage.getItem('purchase_token');
+  console.log(token)
+  if (!token) return;
 
-    if (!email) return;
-
-    // Chama o backend para verificar a compra
-    fetch('https://scrapper-python-mrj0.onrender.com/validate-purchase?email=' + email)
-      .then(res => res.json())
-      .then(data => {
-        if (data.valid) {
-          // Se comprou, redireciona
-          if (typeof window !== 'undefined') {
-            window.location.href = '/upssel';
-          }
-        }
-      })
-  }, []);
+  fetch('https://scrapper-python-mrj0.onrender.com/validate-purchase?token=' + token)
+    .then(res => res.json())
+    .then(data => {
+      console.log("Resposta do backend:", data); 
+      if (data.valid) {
+        window.location.href = '/upssel';
+      }
+    });
+}, []);
   useEffect(() => {
   const link = "https://instaviewpro.site/upssel";
 

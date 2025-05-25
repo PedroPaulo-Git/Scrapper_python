@@ -44,7 +44,7 @@ def webhook():
 
         print("Compra recebida:", data)
 
-        token = data.get("custom_field_token")  # substitua com o nome real do campo no Gumroad
+        token = data.get("purchase[token]") or data.get("purchase.extra_fields[token]")  # substitua com o nome real do campo no Gumroad
 
         if token:
             with open("purchases.txt", "a") as file:
