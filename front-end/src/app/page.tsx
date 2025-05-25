@@ -66,7 +66,30 @@ export default function Home() {
   const [progressAnalys, setProgressAnalys] = useState(0);
   const [loadingAnalys, setLoadingAnalys] = useState(false);
 
+  useEffect(() => {
+  const email = new URLSearchParams(window.location.search).get("email");
+  if (email) {
+    localStorage.setItem("user_email", email);
+  }
+}, []);
 
+ useEffect(() => {
+    const email = localStorage.getItem('user_email') // ou outro identificador salvo
+
+    if (!email) return;
+
+    // Chama o backend para verificar a compra
+    fetch(`/api/validate-purchase?email=${email}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.valid) {
+          // Se comprou, redireciona
+          if (typeof window !== 'undefined') {
+            window.location.href = '/upssel';
+          }
+        }
+      })
+  }, []);
   useEffect(() => {
   const link = "https://instaviewpro.site/upssel";
 

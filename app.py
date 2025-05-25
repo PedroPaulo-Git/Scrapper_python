@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, jsonify
 from routes.userbasicinfos import user_basic_infos_route
 from routes.followers import followers_route
 from routes.highlight import highlights_route
@@ -16,13 +16,36 @@ app.register_blueprint(user_basic_infos_route)
 app.register_blueprint(followers_route)
 app.register_blueprint(user_info_cache) 
 
+@app.route('/validate-purchase')
+def validate_purchase():
+    email = request.args.get("email")
+
+    if not email:
+        return jsonify({"valid": False})
+
+    try:
+        with open("purchases.txt", "r") as file:
+            compras = file.readlines()
+            for linha in compras:
+                if email in linha:
+                    return jsonify({"valid": True})
+    except FileNotFoundError:
+        pass
+
+    return jsonify({"valid": False})
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    data = request.form
-    if data.get('purchase') == 'true':
-        # Aqui você pode salvar as informações da compra
-        return redirect('/upssel')
+    data = request.form.to_dict()
+    print("Compra recebida:", data)
+
+    email = data.get("email")
+    if email:
+        with open("purchases.txt", "a") as file:
+            file.write(f"{email}\n")  # Salva uma linha por compra
+
     return '', 200
+
 
 if __name__ == "__main__":
     app.run(debug=True)

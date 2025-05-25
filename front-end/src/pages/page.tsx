@@ -5,6 +5,17 @@ import React, { useState, useEffect } from "react";
 import { RiErrorWarningLine } from "react-icons/ri";
 
 const Congratulations = () => {
+useEffect(() => {
+  if (typeof window !== "undefined" && window.fbq && !localStorage.getItem("purchase_tracked")) {
+    window.fbq("track", "Purchase", {
+      value: 37.90,
+      currency: "USD",
+    });
+    localStorage.setItem("purchase_tracked", "true");
+    console.log("✅ Evento de compra enviado");
+  }
+}, []);
+
   const [username, setUsername] = useState("");
 
   useEffect(() => {
