@@ -36,15 +36,25 @@ def validate_purchase():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    data = request.form.to_dict()
-    print("Compra recebida:", data)
+    try:
+        # Primeiro tenta pegar como JSON
+        if request.is_json:
+            data = request.get_json()
+        else:
+            # Fallback pra form-data
+            data = request.form.to_dict()
 
-    email = data.get("email")
-    if email:
-        with open("purchases.txt", "a") as file:
-            file.write(f"{email}\n")  # Salva uma linha por compra
+        print("Compra recebida:", data)
 
-    return '', 200
+        email = data.get("email")
+        if email:
+            with open("purchases.txt", "a") as file:
+                file.write(f"{email}\n")  # Salva uma linha por compra
+
+        return '', 200
+    except Exception as e:
+        print("Erro no webhook:", str(e))
+        return jsonify({"error": "Webhook error"}), 400
 
 
 if __name__ == "__main__":
