@@ -79,7 +79,7 @@ export default function Home() {
     if (!email) return;
 
     // Chama o backend para verificar a compra
-    fetch(`/api/validate-purchase?email=${email}`)
+    fetch('https://scrapper-python-mrj0.onrender.com/api/validate-purchase?email=' + email)
       .then(res => res.json())
       .then(data => {
         if (data.valid) {
