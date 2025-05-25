@@ -6,37 +6,38 @@ import { RiErrorWarningLine } from "react-icons/ri";
 
 const Congratulations = () => {
   useEffect(() => {
-    if (typeof window === "undefined") return;
+  if (typeof window === "undefined") return;
 
-    const token = localStorage.getItem("purchase_token");
-    const alreadyTracked = localStorage.getItem("purchase_tracked");
+  const token = localStorage.getItem("purchase_token");
+  const alreadyTracked = localStorage.getItem("purchase_tracked");
 
-    if (!token) {
-      console.warn("⚠️ Token não encontrado.");
-      return;
+  if (!token) {
+    console.warn("⚠️ Token não encontrado.");
+    return;
+  }
+
+  if (alreadyTracked) {
+    console.log("ℹ️ Evento já rastreado.");
+    return;
+  }
+
+  const interval = setInterval(() => {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Purchase", {
+        value: 37.90,
+        currency: "USD",
+      });
+      localStorage.setItem("purchase_tracked", "true");
+      console.log("✅ Evento de compra enviado via polling");
+      clearInterval(interval);
+    } else {
+      console.log("⏳ Aguardando fbq...");
     }
+  }, 500);
 
-    if (alreadyTracked) {
-      console.log("ℹ️ Evento já rastreado.");
-      return;
-    }
+  return () => clearInterval(interval);
+}, []);
 
-    const interval = setInterval(() => {
-      if (typeof window.fbq === "function") {
-        window.fbq("track", "Purchase", {
-          value: 37.9,
-          currency: "USD",
-        });
-        localStorage.setItem("purchase_tracked", "true");
-        console.log("✅ Evento de compra enviado via polling");
-        clearInterval(interval);
-      } else {
-        console.log("⏳ Aguardando fbq...");
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const [username, setUsername] = useState("");
 

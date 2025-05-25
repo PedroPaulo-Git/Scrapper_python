@@ -56,36 +56,60 @@ export default function RootLayout({
           }}
         />
 
-        {/* Meta Pixel */}
+      {/* Meta Pixel Script */}
+<Script id="facebook-pixel" strategy="afterInteractive">
+  {`
+    !(function(f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function() {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = true;
+      t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(window, document, 'script');
 
-        <Script
-          id="meta-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1081176860598734');
-          fbq('track', 'PageView');
-        `,
-          }}
-        />
+    fbq('init', '1081176860598734');
+    fbq('track', 'PageView');
+  `}
+</Script>
         {/* Noscript fallback */}
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1081176860598734&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
+      <Script
+  id="meta-noscript"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      (function() {
+        var noscript = document.createElement('noscript');
+        var img = document.createElement('img');
+        img.height = 1;
+        img.width = 1;
+        img.style = 'display:none';
+        img.src = "https://www.facebook.com/tr?id=1081176860598734&ev=PageView&noscript=1";
+        noscript.appendChild(img);
+        document.body.appendChild(noscript);
+      })();
+    `,
+  }}
+/>
+<Script
+  id="debug-fbq"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      setTimeout(() => {
+        console.log("🔍 fbq is", typeof fbq);
+      }, 3000);
+    `,
+  }}
+/>
       </body>
     </html>
   );
