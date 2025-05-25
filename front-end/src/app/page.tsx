@@ -306,6 +306,8 @@ export default function Home() {
     setFirstUser(null);
     const formattedSearch = search.replace(/^@/, "");
     setUsername(formattedSearch);
+    localStorage.setItem('target_username',formattedSearch );
+    console.log('username salvo:', formattedSearch);
 
     try {
       const response = await fetch(
@@ -333,6 +335,7 @@ export default function Home() {
 
       setUsername(profileData.username);
       localStorage.setItem("searchCount", (searchCount + 1).toString());
+    
     } catch (error) {
       console.warn("API falhou, usando perfil fake:", error);
       const fakeProfile: InstagramUser = {
