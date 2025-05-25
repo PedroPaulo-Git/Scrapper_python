@@ -8,7 +8,7 @@ from flask import Flask
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["https://instaviewpro.vercel.app","http://localhost:3000","https://instaviewpro.site"]) # permite todas as origens (inclusive localhost:3000)
+CORS(app, origins=["https://instaviewpro.vercel.app","http://localhost:3000","https://instaviewpro.site"], methods=["GET","POST","OPTIONS"])
 
 # Registrando a rota
 app.register_blueprint(highlights_route)
