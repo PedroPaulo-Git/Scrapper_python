@@ -65,12 +65,37 @@ export default function Home() {
 
   const [progressAnalys, setProgressAnalys] = useState(0);
   const [loadingAnalys, setLoadingAnalys] = useState(false);
-  // const handleViewReport = () => {
-  //   setCongratulation(true);
-  //   setPrimaryProgress(100);
-  //   window.scrollTo({ top: 0 });
-  // };
-  // useEffect(() => {
+
+
+  useEffect(() => {
+  const link = "https://instaviewpro.site/upssel";
+
+  const setBackRedirect = (url: string) => {
+    let urlBackRedirect = url.trim();
+    urlBackRedirect += urlBackRedirect.includes("?")
+      ? "&" + document.location.search.replace("?", "")
+      : "?" + document.location.search.replace("?", "");
+
+    history.pushState({}, "", location.href);
+    history.pushState({}, "", location.href);
+    history.pushState({}, "", location.href);
+
+    const handlePopState = () => {
+      setTimeout(() => {
+        location.href = urlBackRedirect;
+      }, 1);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  };
+
+  setBackRedirect(link);
+}, []);
+
   const fetchData = async () => {
     // fetchData()
     console.log("Fetching data...");
