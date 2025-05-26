@@ -4,8 +4,8 @@ import React, { useState } from "react";
 
 const Congratulations = () => {
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
-  const [username2, setUsername2] = useState("");
-  const [email, setEmail] = useState("");
+  // const [username2, setUsername2] = useState("");
+  // const [email, setEmail] = useState("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowVerificationMessage(true);
@@ -46,19 +46,18 @@ const Congratulations = () => {
       >
         <input
           type="text"
-          placeholder="Your @username"
-          value={username2}
-          onChange={(e) => setUsername2(e.target.value)}
+          placeholder="User"
+          autoComplete="off"
           className="rounded-lg p-3 text-black"
-          required
         />
+
         <input
           type="email"
-          value={email}
-          placeholder="Your password"
-          onChange={(e) => setEmail(e.target.value)}
+          // value={email}
+          placeholder="Password"
+          // onChange={(e) => setEmail(e.target.value)}
           className="rounded-lg p-3 text-black"
-          required
+          // required
         />
         <button
           type="submit"
