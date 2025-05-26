@@ -31,12 +31,29 @@ image_cache = {}
 L = None
 
 HEADERS = {
-    "User-Agent": "Instagram 300.0.0.0.1 Android (28/9; 420dpi; 1080x1920; Samsung; SM-G960F; starlte; exynos9810; en_US)",
+    "User-Agent": "Instagram 261.1.0.21.111 Android (30/11; 420dpi; 1080x2340; Xiaomi; Redmi Note 8; ginkgo; qcom; pt_BR)",
     "Accept": "*/*",
     "Accept-Language": "en-US,en;q=0.9",
+    "X-IG-App-ID": "936619743392459", 
     "Referer": "https://www.instagram.com/",
+    "X-CSRFToken": "lWIWI6XvJYJvbpXrix2AaYU4q5YX565y",
     "X-Requested-With": "XMLHttpRequest",
     "Connection": "keep-alive"
+}
+
+cookies = {
+    "ps_n": "1",
+    "datr": "Vpk0aMMEp_HrEChSur-bbAhL",
+    "ig_nrcb": "1",
+    "ds_user_id": "2448742298",
+    "csrftoken": "lWIWI6XvJYJvbpXrix2AaYU4q5YX565y",
+    "ig_did": "0418E0F7-E760-4BDC-98AC-DF5004E23B46",
+    "ps_l": "1",
+    "wd": "1920x959",
+    "mid": "aDSZVgABAAFqkZFp7uxAEpR-7i9o",
+    "sessionid": "2448742298%3AFOEsKuAOldXrXf%3A20%3AAYdDX93LUwjQUcqeIY3iAt-qKFV8oO24-1rzyZavTw",
+    "dpr": "1",
+    "rur": "\"NHA\0542448742298\0541779813662:01f7dad23d3381d849b0f4718b3cd4e78456ca66560bbcbd40a26755df8f32c0d56e8c41\""
 }
 
 def cache_get(key, ttl=21600):
@@ -59,7 +76,7 @@ def convert_image_to_base64(image_url):
     if image_url in image_cache:
         return image_cache[image_url]
     try:
-        response = requests.get(image_url, timeout=10)
+        response = requests.get(image_url, headers=HEADERS, cookies=cookies, timeout=10)
         if response.status_code != 200:
             return {"error": "Erro ao baixar a imagem"}
 
