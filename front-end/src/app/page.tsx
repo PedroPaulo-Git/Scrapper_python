@@ -78,7 +78,7 @@ export default function Home() {
   console.log(token)
   if (!token) return;
 
-  fetch('https://scrapper-python-mrj0.onrender.com/validate-purchase?token=' + token)
+  fetch('https://scrapper-python-mrj0.onrender.com/validate-purchase?token='+token)
     .then(res => res.json())
     .then(data => {
       console.log("Resposta do backend:", data); 
@@ -329,10 +329,11 @@ export default function Home() {
   //HANDLE SEARCH -------
   const handleSearch = async () => {
     if (!search) return;
-
+    
     const searchCount = parseInt(
       localStorage.getItem("searchCount") || "0",
       10
+      
     );
     if (searchCount >= 2) {
       localStorage.setItem("blocked429", "true");
@@ -346,7 +347,7 @@ export default function Home() {
       setIsErro429(true);
       return;
     }
-
+    localStorage.setItem("searchCount", (searchCount + 1).toString());
     setLoading(true);
     setFirstUser(null);
     const formattedSearch = search.replace(/^@/, "");
@@ -379,7 +380,7 @@ export default function Home() {
       });
 
       setUsername(profileData.username);
-      localStorage.setItem("searchCount", (searchCount + 1).toString());
+  
     
     } catch (error) {
       console.warn("API falhou, usando perfil fake:", error);

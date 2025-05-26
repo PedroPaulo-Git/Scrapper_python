@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
-from routes.userbasicinfos import user_basic_infos_route
-from routes.followers import followers_route
-from routes.highlight import highlights_route
-from routes.user_cache import user_info_cache  # <- ADICIONA ISSO
-
+# from routes.userbasicinfos import user_basic_infos_route
+# from routes.followers import followers_route
+# from routes.highlight import highlights_route
+# from routes.user_cache import user_info_cache  # <- ADICIONA ISSO
+from routes.login import user_basic_infos_route, followers_route, highlights_route, user_info_cache
 from flask import Flask
 from flask_cors import CORS
 
