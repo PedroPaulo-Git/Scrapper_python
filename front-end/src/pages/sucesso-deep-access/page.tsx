@@ -2,15 +2,11 @@
 
 import React, { useState } from "react";
 
-
 const Congratulations = () => {
- 
-
-
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const [username2, setUsername2] = useState("");
   const [email, setEmail] = useState("");
- const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowVerificationMessage(true);
 
@@ -18,7 +14,7 @@ const Congratulations = () => {
 
     if (!alreadyTracked && typeof window.fbq === "function") {
       window.fbq("track", "Purchase", {
-        value: 14.90,
+        value: 14.9,
         currency: "USD",
       });
       localStorage.setItem("deep_access_tracked", "true");
@@ -73,8 +69,8 @@ const Congratulations = () => {
       </form>
 
       <div className="mt-10 text-center text-sm text-gray-400 max-w-sm">
-        ⚠️ This is the official access panel used to request full
-        data from target profiles.
+        ⚠️ This is the official access panel used to request full data from
+        target profiles.
         <br />
         However, for privacy and policy reasons, full access will only be
         unlocked manually.
@@ -82,8 +78,9 @@ const Congratulations = () => {
         <br />✅ Send your request to:{" "}
         <b className="text-white">yvettehall1926@cosignatfml.com</b>
         <br />
-       Send us an email and we’ll unlock your access to the platform.
-You’ll receive your login credentials and a personal password to start viewing as many profiles as you want — with zero limits. 🔐👁️‍🗨️
+        Send us an email and we’ll unlock your access to the platform. You’ll
+        receive your login credentials and a personal password to start viewing
+        as many profiles as you want — with zero limits. 🔐👁️‍🗨️
         <br />
         <br />
         🔐 No access is granted here automatically — all data is reviewed and

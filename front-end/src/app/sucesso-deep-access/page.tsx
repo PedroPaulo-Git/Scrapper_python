@@ -10,7 +10,7 @@ const Congratulations = () => {
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const [username2, setUsername2] = useState("");
   const [email, setEmail] = useState("");
- const handleSubmit = (e: any) => {
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowVerificationMessage(true);
 
