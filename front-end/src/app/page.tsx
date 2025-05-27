@@ -78,7 +78,7 @@ export default function Home() {
   console.log(token)
   if (!token) return;
 
-  fetch('https://scrapper-python-mrj0.onrender.com/validate-purchase?token='+token)
+  fetch('https://instaviewpro.onrender.com/validate-purchase?token='+token)
     .then(res => res.json())
     .then(data => {
       console.log("Resposta do backend:", data); 
@@ -138,7 +138,7 @@ export default function Home() {
       const fetchFollowers = async () => {
         try {
           const response = await fetch(
-            `https://scrapper-python-mrj0.onrender.com/userfollowers?username=${username}`
+            `https://instaviewpro.onrender.com/userfollowers?username=${username}`
           );
           console.log(response);
           if (response.status === 429) {
@@ -183,7 +183,7 @@ export default function Home() {
       const fetchHighlights = async () => {
         try {
           const response = await fetch(
-            `https://scrapper-python-mrj0.onrender.com/userhighlights?username=${username}`
+            `https://instaviewpro.onrender.com/userhighlights?username=${username}`
           );
 
           if (response.status === 502)
@@ -357,7 +357,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        `https://scrapper-python-mrj0.onrender.com/userbasicinfos?username=${formattedSearch}`
+        `https://instaviewpro.onrender.com/userbasicinfos?username=${formattedSearch}`
       );
 
       if (!response.ok) {
