@@ -96,7 +96,12 @@ def login_instaloader(username, password, max_retries=3):
         return _sessions[username]
 
     L = Instaloader()
-    session_filename = f"session-{username}"
+    env = os.getenv("ENV", "development")
+
+    if env == "production":
+        session_filename = f"/etc/secrets/session-{username}"
+    else:
+        session_filename = f"session-{username}"  # arquivo local
 
     try:
         if os.path.exists(session_filename):
