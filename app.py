@@ -120,24 +120,24 @@ def proxy_user_basic_infos():
         return jsonify({"error": "username é obrigatório"}), 400
 
     try:
+        # ✅ Cabeçalhos que ignoram o aviso do ngrok
         headers = {
             "ngrok-skip-browser-warning": "true",
-            "User-Agent": "MyApp/1.0"
+            "User-Agent": "MyCustomAgent/1.0"
         }
+
         response = requests.get(
-            f"{NGROK_URL}/proxy/userbasicinfos",
+            f"{NGROK_URL}/userbasicinfos",  # atenção: rota original do seu backend local
             params={"username": username},
             headers=headers,
             timeout=10
         )
 
-        print("Status Code:", response.status_code)
-        print("Response Text:", response.text[:500])
+        # Se a resposta for HTML (o que ainda pode ser erro), trate para debug
+        if "text/html" in response.headers.get("Content-Type", ""):
+            return jsonify({"error": "Recebeu HTML ao invés de JSON", "html_snippet": response.text[:300]}), 500
 
-        if response.status_code == 200 and "application/json" in response.headers.get("Content-Type", ""):
-            return jsonify(response.json()), response.status_code
-        else:
-            return response.text, response.status_code
+        return jsonify(response.json()), response.status_code
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
