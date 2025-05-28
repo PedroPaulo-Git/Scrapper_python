@@ -123,7 +123,7 @@ def proxy_user_basic_infos():
         "ngrok-skip-browser-warning": "true",
         "User-Agent": "Mozilla/5.0"
     }
-
+ 
     try:
         response = requests.get(
             f"{NGROK_URL}/userbasicinfos",
@@ -131,6 +131,11 @@ def proxy_user_basic_infos():
             headers=headers,
             timeout=10
         )
+        print("🔁 Proxying to:", f"{NGROK_URL}/userbasicinfos?username={username}")
+        print("🔁 Headers:", headers)
+        print("🔁 Response status:", response.status_code)
+        print("🔁 Response headers:", response.headers)
+        print("🔁 Response body (partial):", response.text[:200])
 
         # Se veio HTML (erro ngrok), captura isso
         if "text/html" in response.headers.get("Content-Type", ""):
