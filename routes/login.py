@@ -33,27 +33,27 @@ L = None
 HEADERS = {
     "User-Agent": "Instagram 261.1.0.21.111 Android (30/11; 420dpi; 1080x2340; Xiaomi; Redmi Note 8; ginkgo; qcom; pt_BR)",
     "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9",
     "X-IG-App-ID": "936619743392459",
     "Referer": "https://www.instagram.com/",
-    "X-CSRFToken": "r72mBGrTA8SQtEBqhBN6R5eCvqV8AjNF",
+    "X-CSRFToken": "K2TX6JCPdm2VzoZQGVwLJ3iGcLZVjBEM",
     "X-Requested-With": "XMLHttpRequest",
+    "Origin": "https://www.instagram.com",
     "Connection": "keep-alive"
 }
 
 cookies = {
     "ps_n": "1",
-    "datr": "Vpk0aMMEp_HrEChSur-bbAhL",
     "ig_nrcb": "1",
     "ds_user_id": "2448742298",
-    "csrftoken": "r72mBGrTA8SQtEBqhBN6R5eCvqV8AjNF",
-    "ig_did": "0418E0F7-E760-4BDC-98AC-DF5004E23B46",
+    "csrftoken": "K2TX6JCPdm2VzoZQGVwLJ3iGcLZVjBEM",
+    "ig_did": "3C1020B6-3EF6-412F-8102-CC699EE762C4",
     "ps_l": "1",
     "wd": "1920x959",
-    "mid": "aDSZVgABAAFqkZFp7uxAEpR-7i9o",
-    "sessionid": "2448742298%3AL8AoediyRh1muf%3A28%3AAYeeWKmgTVavj_a3QQSsm85gij0SwrwQWgw9d-jWKg",
-    "dpr": "1",
-    "rur": "\"NCG\\0542448742298\\0541779939779:01f7a9053e55b6b15117c2390d6d9e11a146fb74a5f328af059029e235668575ffdefeff\""
+    "mid": "aDaJDgALAAHwqXftnXK73ryfmjYi",
+    "sessionid": "2448742298%3A7jqbacfu1qdRiV%3A23%3AAYfmYdGM9GS9_yhCkJERou-pecm2BATJXiL6cOZCag",
+    "rur": "\"FRC\\0542448742298\\0541779940539:01f7d9539776d32207c015d70735d6f86460527579b50824ad38a01e04acf8131b7f989c\""
 }
 
 
