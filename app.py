@@ -194,7 +194,7 @@ def user_basic_infos():
             "id": user.get("id"),
             "username": user.get("username"),
             "full_name": user.get("full_name"),
-            "profile_pic_url": profile_pic_base64 or "",  # imagem já em base64
+            "picture": profile_pic_base64 or "",  # imagem já em base64
             "biography": user.get("biography"),
             "followers_count": user.get("edge_followed_by", {}).get("count"),
             "following_count": user.get("edge_follow", {}).get("count"),
