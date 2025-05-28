@@ -81,7 +81,7 @@ export default function RootLayout({
   `}
 </Script>
         {/* Noscript fallback */}
-      <Script
+      {/* <Script
   id="meta-noscript"
   strategy="afterInteractive"
   dangerouslySetInnerHTML={{
@@ -98,7 +98,7 @@ export default function RootLayout({
       })();
     `,
   }}
-/>
+/> */}
 <Script
   id="debug-fbq"
   strategy="afterInteractive"

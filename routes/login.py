@@ -99,16 +99,20 @@ def login_instaloader(username, password, max_retries=3):
     env = os.getenv("ENV", "development")
 
     if env == "production":
-        session_filename = f"/etc/secrets/session-{username}"
+      
+        session_filename = f"/tmp/session-{username}"
     else:
         session_filename = f"session-{username}"  # arquivo local
 
     try:
         if os.path.exists(session_filename):
+            print(f"📁 Procurando sessão em: {session_filename}")
             L.load_session_from_file(username, session_filename)
         else:
             try:
+                print("🔐 Logando no Instagram...")
                 L.login(username, password)
+                
             except TwoFactorAuthRequiredException:
                 for attempt in range(1, max_retries + 1):
                     code = get_2fa_code()
