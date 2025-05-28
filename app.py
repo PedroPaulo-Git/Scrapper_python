@@ -184,16 +184,17 @@ def user_basic_infos():
         data = response.json()
 
         user = data.get("data", {}).get("user", {})
-
         if not user:
             return jsonify({"error": "Usuário não encontrado"}), 404
 
-        # Extrair só os campos que o frontend precisa
+        profile_pic_url = user.get("profile_pic_url_hd") or user.get("profile_pic_url")
+        profile_pic_base64 = convert_image_to_base64(profile_pic_url) if profile_pic_url else None
+
         simplified_user = {
             "id": user.get("id"),
             "username": user.get("username"),
             "full_name": user.get("full_name"),
-            "profile_pic_url": user.get("profile_pic_url_hd") or user.get("profile_pic_url"),
+            "profile_pic_url": profile_pic_base64 or "",  # imagem já em base64
             "biography": user.get("biography"),
             "followers_count": user.get("edge_followed_by", {}).get("count"),
             "following_count": user.get("edge_follow", {}).get("count"),
