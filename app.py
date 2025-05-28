@@ -76,11 +76,12 @@
 # if __name__ == "__main__":
 #     app.run(debug=True)
 
+import mimetypes
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
-
+import base64
 app = Flask(__name__)
 CORS(app, origins=["https://instaviewpro.vercel.app", "http://localhost:3000", "https://instaviewpro.site"], methods=["GET", "POST", "OPTIONS"])
 
@@ -147,6 +148,25 @@ def proxy_user_basic_infos():
 
 
 
+image_cache = {}
+
+def convert_image_to_base64(image_url):
+    if image_url in image_cache:
+        return image_cache[image_url]
+    try:
+        response = requests.get(image_url, headers=HEADERS, cookies=COOKIES, timeout=10)
+        if response.status_code != 200:
+            return None
+
+        content_type = response.headers.get("Content-Type") or mimetypes.guess_type(image_url)[0] or "image/jpeg"
+        image_bytes = response.content
+        base64_image = base64.b64encode(image_bytes).decode('utf-8')
+        data_url = f"data:{content_type};base64,{base64_image}"
+        image_cache[image_url] = data_url
+        return data_url
+    except Exception:
+        return None
+    
 @app.route("/userbasicinfos")
 def user_basic_infos():
     username = request.args.get("username")
