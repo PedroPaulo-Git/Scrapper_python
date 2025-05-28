@@ -335,7 +335,7 @@ export default function Home() {
       10
       
     );
-    if (searchCount >= 2) {
+    if (searchCount >= 1) {
       localStorage.setItem("blocked429", "true");
       setIsErro429(true);
       setCongratulation(true);
