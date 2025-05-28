@@ -122,8 +122,8 @@ def proxy_user_basic_infos():
     try:
         # ✅ Cabeçalhos que ignoram o aviso do ngrok
         headers = {
-            "ngrok-skip-browser-warning": "true",
-            "User-Agent": "MyCustomAgent/1.0"
+            "ngrok-skip-browser-warning": "true",  # Força ignorar a página de aviso
+            "User-Agent": "Mozilla/5.0 (compatible; MyScraper/1.0)"  
         }
 
         response = requests.get(
