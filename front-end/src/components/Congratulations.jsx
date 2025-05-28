@@ -79,16 +79,31 @@ const Congratulations = ({ isErro429 }) => {
     // Limpa o intervalo quando o componente for desmontado
     return () => clearInterval(interval);
   }, [timeLeft]); // Recalcula sempre que o timeLeft mudar
-  const handleClick = () => {
-    const token = uuidv4(); // gera token único
-    localStorage.setItem("purchase_token", token); // salva no navegador
 
-    // monta a URL do checkout com o token anexado
-    const url = `https://instaviewpro.gumroad.com/l/InstaViewPRO?token=${token}`;
 
-    // redireciona
-    window.location.href = url;
-  };
+  
+ const handleClick = () => {
+  const token = uuidv4(); // gera token único
+  localStorage.setItem("purchase_token", token); // salva no navegador
+
+  // 🔥 Dispara o evento pro Pixel ANTES de redirecionar
+  if (typeof window.fbq === "function") {
+    window.fbq("track", "InitiateCheckout", {
+      content_name: "InstaViewPRO",
+      value: 37.9,
+      currency: "USD",
+    });
+    console.log("🔥 Evento InitiateCheckout enviado");
+  }
+
+  // monta a URL do checkout com o token anexado
+  const url = `https://instaviewpro.gumroad.com/l/InstaViewPRO?token=${token}`;
+
+  // redireciona
+  setTimeout(() => window.location.href = url, 150);
+};
+
+
   useEffect(() => {
     if (isErro429) {
       setShowError429(true);
