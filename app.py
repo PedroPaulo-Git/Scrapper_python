@@ -111,7 +111,7 @@ COOKIES = {
     "rur": "\"FRC\\0542448742298\\0541779940539:01f7d9539776d32207c015d70735d6f86460527579b50824ad38a01e04acf8131b7f989c\""
 }
 
-NGROK_URL = os.getenv("NGROK_URL", "https://6415-138-121-33-169.ngrok-free.app")
+NGROK_URL = os.getenv("NGROK_URL", "https://626c-138-121-33-171.ngrok-free.app ")
 
 @app.route("/proxy/userbasicinfos")
 def proxy_user_basic_infos():
@@ -119,28 +119,43 @@ def proxy_user_basic_infos():
     if not username:
         return jsonify({"error": "username é obrigatório"}), 400
 
-    try:
-        # ✅ Cabeçalhos que ignoram o aviso do ngrok
-        headers = {
-            "ngrok-skip-browser-warning": "true",  # Força ignorar a página de aviso
-            "User-Agent": "Mozilla/5.0 (compatible; MyScraper/1.0)"  
-        }
+    headers = {
+        "ngrok-skip-browser-warning": "true",
+        "User-Agent": "Mozilla/5.0"
+    }
 
+    try:
         response = requests.get(
-            f"{NGROK_URL}/userbasicinfos",  # atenção: rota original do seu backend local
+            f"{NGROK_URL}/userbasicinfos",
             params={"username": username},
             headers=headers,
             timeout=10
         )
 
-        # Se a resposta for HTML (o que ainda pode ser erro), trate para debug
+        # Se veio HTML (erro ngrok), captura isso
         if "text/html" in response.headers.get("Content-Type", ""):
             return jsonify({"error": "Recebeu HTML ao invés de JSON", "html_snippet": response.text[:300]}), 500
 
         return jsonify(response.json()), response.status_code
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
+@app.route("/userbasicinfos")
+def user_basic_infos():
+    username = request.args.get("username")
+    if not username:
+        return jsonify({"error": "username é obrigatório"}), 400
+
+    response = requests.get(
+        f"https://i.instagram.com/api/v1/users/web_profile_info/?username={username}",
+        headers=HEADERS,
+        cookies=COOKIES,
+        timeout=10
+    )
+
+    return jsonify(response.json()), response.status_code
 
 
 if __name__ == "__main__":
