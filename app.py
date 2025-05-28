@@ -153,14 +153,40 @@ def user_basic_infos():
     if not username:
         return jsonify({"error": "username é obrigatório"}), 400
 
-    response = requests.get(
-        f"https://i.instagram.com/api/v1/users/web_profile_info/?username={username}",
-        headers=HEADERS,
-        cookies=COOKIES,
-        timeout=10
-    )
+    try:
+        response = requests.get(
+            f"https://i.instagram.com/api/v1/users/web_profile_info/?username={username}",
+            headers=HEADERS,
+            cookies=COOKIES,
+            timeout=10
+        )
+        response.raise_for_status()
+        data = response.json()
 
-    return jsonify(response.json()), response.status_code
+        user = data.get("data", {}).get("user", {})
+
+        if not user:
+            return jsonify({"error": "Usuário não encontrado"}), 404
+
+        # Extrair só os campos que o frontend precisa
+        simplified_user = {
+            "id": user.get("id"),
+            "username": user.get("username"),
+            "full_name": user.get("full_name"),
+            "profile_pic_url": user.get("profile_pic_url_hd") or user.get("profile_pic_url"),
+            "biography": user.get("biography"),
+            "followers_count": user.get("edge_followed_by", {}).get("count"),
+            "following_count": user.get("edge_follow", {}).get("count"),
+            "is_private": user.get("is_private"),
+            "is_verified": user.get("is_verified"),
+            "category_name": user.get("category_name"),
+        }
+
+        return jsonify(simplified_user), 200
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == "__main__":
